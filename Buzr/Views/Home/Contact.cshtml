@@ -1,17 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Contact";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+﻿@model  IEnumerable<CommentReply>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>CommentId</th>
+            <th>CommentText</th>
+            <th>ReplyText</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>@v.Id</td>
+                <td>@v.CommentId</td>
+                <td>@v.CommentText</td>
+                <td>@v.ReplyText</td>
+            </tr>
+        }
+    </tbody>
+</table>
