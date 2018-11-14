@@ -1,0 +1,12 @@
+﻿@if (@ViewBag.Success == true)
+{
+    <h2>Operation Tweet @ViewBag.ActionType succeeded!</h2>
+}
+else
+{
+    <h2>Operation Tweet @ViewBag.ActionType failed!</h2>
+}
+
+<div>
+    <a href="https://twitter.com/statuses/@ViewBag.TweetId">View your tweet on Twitter</a>
+</div>
