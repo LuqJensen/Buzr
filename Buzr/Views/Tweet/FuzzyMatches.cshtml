@@ -1,0 +1,25 @@
+﻿@model Buzr.ViewModels.FuzzyMatch
+
+<h2>Tweet</h2>
+<p>@Model.Tweet.Text</p>
+
+<h2>Reply</h2>
+<form asp-action="Reply" asp-controller="Tweet" method="post">
+    <input name="id" type="text" value="@Model.Tweet.Id" hidden />
+    <textarea id="text" name="text" type="text" maxlength="140" style="width:500px; height:75px;"></textarea>
+    <button type="submit" class="btn btn-success">Reply</button>
+</form>
+
+<h2>Best matches</h2>
+<ol>
+    @foreach (var v in Model.CommentReplies)
+    {
+        <li><a onclick="pickFuzzyMatch('@v.ReplyText')" href="#">@v.ReplyText</a></li>
+    }
+</ol>
+
+<script type="text/javascript">
+    function pickFuzzyMatch(text) {
+        $("#text").val(text);
+    }
+</script>

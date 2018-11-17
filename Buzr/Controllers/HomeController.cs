@@ -49,7 +49,7 @@ namespace Buzr.Controllers
                 });
                 db.SaveChanges();
             }
-            return View();
+            return RedirectToAction("TwitterAuth");
         }
 
         public IActionResult About()
