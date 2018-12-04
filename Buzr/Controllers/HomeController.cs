@@ -30,8 +30,8 @@ namespace Buzr.Controllers
                 var authorizationId = Request.Query["authorization_id"];
 
                 var userCreds = AuthFlow.CreateCredentialsFromVerifierCode(verifierCode, authorizationId);
+                TweetController.Credentials = userCreds;
                 var user = Tweetinvi.User.GetAuthenticatedUser(userCreds);
-
                 ViewBag.User = user;
             }
 
@@ -40,14 +40,9 @@ namespace Buzr.Controllers
 
         public IActionResult Index()
         {
-            using (var db = new CommentContext())
+            if (TweetController.Credentials != null)
             {
-                db.CommentReplies.Add(new CommentReply
-                {
-                    CommentText = "What is ur opening hours?",
-                    ReplyText = "9-15 Mondays to Fridays and 10-14 Saturdays."
-                });
-                db.SaveChanges();
+                return RedirectToAction("Mentions", "Tweet");
             }
             return RedirectToAction("TwitterAuth");
         }

@@ -11,25 +11,4 @@ else
     <p>Something went wrong during the authentication, please <a href="/Home/TwitterAuth">try again</a>!</p>
 }
 
-@{
-    var user = ViewBag.User as IAuthenticatedUser;
-    var tweets = user.GetMentionsTimeline();
-    var myReplies = user.GetHomeTimeline();
-
-}
-
-    <ul>
-        @foreach (var v in tweets)
-        {
-        <li>
-            <a href="/Tweet/FuzzyMatches/@v.Id">@v.Text</a>
-            @foreach (var t in myReplies)
-            {
-                if (t.InReplyToStatusId == v.Id)
-                {
-                    <span>✔️</span>
-                }
-            }
-        </li>
-         }
-    </ul>
+<a href="/Tweet/Mentions">Go to mentions</a>

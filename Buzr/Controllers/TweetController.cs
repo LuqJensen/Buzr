@@ -17,11 +17,20 @@ namespace Buzr.Controllers
 {
     public class TweetController : Controller
     {
-        private static ITwitterCredentials _credentials;
+        public static ITwitterCredentials Credentials { get; set; }
     
         public TweetController()
         {
-            _credentials = MyCredentials.GenerateCredentials();
+            Auth.Credentials = Credentials;
+        }
+
+        [HttpGet]
+        public ActionResult Mentions()
+        {
+            var user = Tweetinvi.User.GetAuthenticatedUser(Auth.Credentials);
+
+            ViewBag.User = user;
+            return View();
         }
 
         [HttpGet]
@@ -45,7 +54,7 @@ namespace Buzr.Controllers
         public ActionResult Reply(long id, string text)
         {
             var tweet = Tweet.GetTweet(id);
-            var publishedTweet = Auth.ExecuteOperationWithCredentials(_credentials, () =>
+            var publishedTweet = Auth.ExecuteOperationWithCredentials(Auth.Credentials, () =>
             {
                 var reply = $"@{tweet.CreatedBy.ScreenName} {text}";
                 return Tweet.PublishTweetInReplyTo(reply, id);
@@ -77,7 +86,7 @@ namespace Buzr.Controllers
         {
             var fileBytes = GetByteArrayFromFile(file);
     
-            var publishedTweet = Auth.ExecuteOperationWithCredentials(_credentials, () =>
+            var publishedTweet = Auth.ExecuteOperationWithCredentials(Auth.Credentials, () =>
             {
                 var publishOptions = new PublishTweetOptionalParameters();
                 if (fileBytes != null)
