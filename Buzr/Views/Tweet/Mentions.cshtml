@@ -11,18 +11,35 @@
     var myReplies = user.GetHomeTimeline();
 
 }
-<ul>
-    @foreach (var v in tweets)
-    {
-        <li>
-            <a href="/Tweet/FuzzyMatches/@v.Id">@v.Text</a>
-            @foreach (var t in myReplies)
+
+@foreach (var v in tweets)
+{
+<a class="mentíonLink" href="/Tweet/FuzzyMatches/@v.Id">
+    <div class="mention">
+        @{
+            var hasReply = false;
+        }
+        @foreach (var t in myReplies)
+        {
+            if (t.InReplyToStatusId == v.Id)
             {
-                if (t.InReplyToStatusId == v.Id)
-                {
-                    <span>✔️</span>
-                }
+                hasReply = true;
+                break;
             }
-        </li>
-    }
-</ul>
+        }
+        @if (hasReply)
+        {
+
+            <span class="repliedTo hasReply">✔️</span>
+        }
+        else
+        {
+
+            <span class="repliedTo hasNotReply">❌</span>
+        }
+        <span>@v.Text</span>
+        <span> - </span>
+        <span class="screenName">@v.CreatedBy.ScreenName</span>
+    </div>
+</a>
+}

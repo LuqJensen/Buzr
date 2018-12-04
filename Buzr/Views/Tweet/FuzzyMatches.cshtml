@@ -2,6 +2,7 @@
 
 <h2>Tweet</h2>
 <p>@Model.Tweet.Text</p>
+<p style="font-size=10px">- @Model.Tweet.CreatedBy.ScreenName</p>
 
 <h2>Reply</h2>
 <form asp-action="Reply" asp-controller="Tweet" method="post">
