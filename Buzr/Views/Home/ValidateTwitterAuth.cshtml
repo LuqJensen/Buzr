@@ -14,14 +14,22 @@ else
 @{
     var user = ViewBag.User as IAuthenticatedUser;
     var tweets = user.GetMentionsTimeline();
+    var myReplies = user.GetHomeTimeline();
+
 }
 
-<ul>
-
-    @foreach (var v in tweets)
-    {
+    <ul>
+        @foreach (var v in tweets)
+        {
         <li>
             <a href="/Tweet/FuzzyMatches/@v.Id">@v.Text</a>
+            @foreach (var t in myReplies)
+            {
+                if (t.InReplyToStatusId == v.Id)
+                {
+                    <span>✔️</span>
+                }
+            }
         </li>
-   }
-</ul>
+         }
+    </ul>
