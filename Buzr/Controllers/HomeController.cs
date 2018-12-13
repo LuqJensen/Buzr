@@ -47,31 +47,6 @@ namespace Buzr.Controllers
             return RedirectToAction("TwitterAuth");
         }
 
-        public IActionResult About()
-        {
-            var searchString = "What r ur opening hour?";
-            using (var db = new CommentContext())
-            {
-                var bestMatches = db.CommentReplies.OrderByDescending(x => Fuzzy.PartialRatio(searchString, x.CommentText)).Take(3).ToList();
-                return View("Contact", bestMatches);
-            }
-        }
-
-        public IActionResult Contact()
-        {
-            using (var db = new CommentContext())
-            {
-                var replies = db.CommentReplies.ToList();
-                return View(replies);
-            }
-        }
-
-        public IActionResult Privacy()
-        {
-
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
